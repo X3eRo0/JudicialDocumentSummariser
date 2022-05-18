@@ -10,6 +10,7 @@ JDS (Judicial Document Summariser) is an application that tries to summarise Jud
 ![with pdf opened](https://gcdnb.pbrd.co/images/HjJq4Yn7wvJG.png?o=1)
 ![without pdf opened](https://gcdnb.pbrd.co/images/eK0ZYSse6OhZ.png?o=1)
 # Authors
+ Superivisor : Dr. Amit Singhal
 
  1. Pulkit Singh Singaria ([X3eRo0](https://x3ero0.tech/))
  2. Yash Kaushik ([yk6922](https://github.com/yk6922))
