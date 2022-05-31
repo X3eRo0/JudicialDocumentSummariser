@@ -70,8 +70,11 @@ class DownloadDocument:
 def GetPage(url):
     s = cloudscraper.create_scraper()
     print("[+] Fetching %s" % url)
-    data = s.get(url, timeout=(1, 10))
-    assert data.status_code == 200
+    try:
+        data = s.get(url, timeout=(1, 10))
+        assert data.status_code == 200
+    except:
+        data = None
     return data
 
 
@@ -94,6 +97,8 @@ class KanoonCrawler:
     def FetchCourts(self):
         BASE_URL = ROOT_URL + "/browse/"
         page = GetPage(BASE_URL)
+        if page is None:
+            return
         html = page.text
         soup = BeautifulSoup(html, "html5lib")
 
@@ -113,7 +118,7 @@ class KanoonCrawler:
             url_name = link[8:-1]
             yr = GetPage(ROOT_URL + link)
             if yr is None:
-                print(link)
+                continue
 
             yr = BeautifulSoup(yr.text, "html5lib")
             divs = yr.find_all("div", "browselist")
@@ -162,6 +167,8 @@ class KanoonCrawler:
                     + "&pagenum=%d" % (PAGE_NO)
                 )
                 page = GetPage(link)
+                if page is None:
+                    continue
                 pgsp = BeautifulSoup(page.text, "html5lib")
                 atag = pgsp.find_all("a")
                 curr = []
@@ -191,6 +198,6 @@ class KanoonCrawler:
                             document,
                             "%s/%s" % (court.full_name.replace(" ", "_"), year),
                         )
-# kc = KanoonCrawler()
-# kc.LoadCourts()
-# kc.DownloadCourt("delhi")
+kc = KanoonCrawler()
+kc.LoadCourts()
+kc.DownloadCourt("kerala")
